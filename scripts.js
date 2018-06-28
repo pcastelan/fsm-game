@@ -9,19 +9,37 @@ var barraX, barraY;
 var mouseX = 0, mouseY = 0;
 var velocidade = 5;
 var attTimer, escreveNum, attNum;
+var somPonto, somExplicacao, somJogo, somTelaInicial, somGanhou, somPerdeu, somVolume = .5;
 
 window.onload = function () {
+
+    //sons
+    somTelaInicial = new Audio('sounds/telainicial.mp3');
+    somPonto = new Audio('sounds/ponto.wav');
+    somPonto.volume = 1;
+    somExplicacao = new Audio('sounds/explicacao.mp3');
+    somJogo = new Audio('sounds/jogando.mp3');
+    somPerdeu = new Audio('sounds/perdeu.wav');
+    somGanhou = new Audio('sounds/ganhou.wav');
+    somTelaInicial.volume = somExplicacao.volume = somJogo.volume = somVolume;
+
+    somTelaInicial.play();
+
+
     var btnInicio = document.querySelector('#iniciaJogo');
     btnInicio.addEventListener("click", function () {
         document.querySelector('.tela-inicial').style.display = 'none';
         document.querySelector('.explica-simples').style.display = 'block';
+        somTelaInicial.pause();
+        somExplicacao.play();
     });
 
     var btnFase = document.querySelector('#carregaJogo');
     btnFase.addEventListener("click", function(){
         document.querySelector('#wrapper').style.display = 'none';
         document.querySelector('#c').style.display = 'block';
-
+        somExplicacao.pause();
+        somJogo.play();
         carregaJogo();
     });
 }
@@ -39,7 +57,6 @@ function iniciaJogo() {
     barraX = (canvas.width / 2) - (barraW / 2);
     barraY = canvas.height - barraH;
     montaFase();
-    console.log(timer);
 
     //define o relogio
     timer = 30;
@@ -61,7 +78,6 @@ function moveBarra(e) {
     if ((barraX - barraW) < 0) {
         barraX = 0;
     }
-    console.log('mousex: '+ mouseX + ', mousey: ' + mouseY);
 }
 
 function limpaTela() {
@@ -107,9 +123,7 @@ function escreveNumeros() {
         if (numeros[i][2] >= barraY && (numeros[i][1] >= barraX && numeros[i][1] <= barraX + barraW)) {
             score += numeros[i][0];
             numeros.splice(i, 1);
-        }
-        if (numeros[i][2] > canvas.height+25) {
-            numeros.splice(i, 1);
+            somPonto.play();
         }
         
     }
@@ -134,7 +148,6 @@ function atualizaTimer() {
         return false;
     }
     timer--;
-    console.log(timer);
     
 }
 function escreveTimer() {
