@@ -7,51 +7,85 @@ var numeros = [];
 var timer = 30;
 var barraX, barraY;
 var mouseX = 0, mouseY = 0;
-var velocidade = 10;
+var velocidade = 5;
 var attTimer, escreveNum, attNum;
 var limiteScore = 0;
 
+var proxFase = document.querySelector('.proxima-fase');
+var btnProxFase = document.querySelector('#btn-prox-fase');
+
+
+
 window.onload = function () {
+    var btnInicio = document.querySelector('#iniciaJogo');
+    btnInicio.addEventListener("click", function () {
+        document.querySelector('.tela-inicial').style.display = 'none';
+        document.querySelector('.explica-simples').style.display = 'block';
+    });
+
+    var btnFase = document.querySelector('#carregaJogo');
+    btnFase.addEventListener("click", function(){
+        document.querySelector('#wrapper').style.display = 'none';
+        document.querySelector('#c').style.display = 'block';
+        document.querySelector('.explica-simples').style.display = 'none';
+        document.querySelector('.tela-inicial').style.display = 'none';
+        document.querySelector('.tela-final').style.display = 'none';
+        document.querySelector('.creditos').style.display = 'none';
+        carregaJogo();
+
+
+    });
+
+
+
+}
+
+function carregaJogo () {
     //contexto
     canvas = document.getElementById('c');
     context = canvas.getContext('2d');
 
+
+    iniciaJogo();
+    
+
+}
+function iniciaJogo() {
     barraX = (canvas.width / 2) - (barraW / 2);
     barraY = canvas.height - barraH;
     montaFase();
+    // console.log(timer);
 
-    
-    
     //define o relogio
-
     timer = 30;
-    
+
     //escreve numeros na tela            
     escreveNum = setInterval(escreveNumeros, 1000 / 30);
 
     //adiciona novos numeros a matriz de numeros
-    attNum = setInterval(atualizaNumeros, 1000 / 1);
+    attNum = setInterval(atualizaNumeros, 1000 / 5);
 
     //atualiza o relogio
-
-    // if (timer > 0) {
     attTimer = setInterval(atualizaTimer, 1000);
+
     // }
     limiteScore = geraNumero()[0];
 
+    proxFase.style.width = canvas.width / 2;
+    proxFase.style.height= canvas.height / 2;
+    proxFase.style.marginLeft = 'auto';
+    proxFase.style.marginRight = 'auto';
 
 }
 function moveBarra(e) {
     barraX = e.clientX;
-    // barraX += e.clientX-mouseX;
-    // mouseX = e.clientX;
     if((barraX+barraW)>canvas.width){
         barraX=barraX-barraW;
     }
     if ((barraX - barraW) < 0) {
         barraX = 0;
     }
-    console.log('mousex: '+ mouseX + ', mousey: ' + mouseY);
+    // console.log('mousex: '+ mouseX + ', mousey: ' + mouseY);
 }
 
 function limpaTela() {
@@ -63,12 +97,38 @@ function limpaTela() {
 function montaFase() {
     limpaTela();
 
-
     //barrinha 
-
     context.fillStyle = '#674172';
     context.fillRect(barraX, barraY, barraW, barraH);
+}
 
+function fimDeFase() {
+    
+     document.querySelector('#wrapper').style.display = 'block';
+
+    if (limiteScore == score) {
+       document.querySelector('#title-prox-fase').innerHTML = 'Parabéns!';
+        btnProxFase.innerHTML = 'Clique aqui para ir para próxima fase.'; 
+    }else {
+        document.querySelector('#c').style.display = 'none';
+        document.querySelector('.proxima-fase').style.display = 'block';
+        document.querySelector('#title-prox-fase').innerHTML = ':(';
+        btnProxFase.innerHTML = 'Clique aqui para tentar novamente!';
+
+        
+
+    }
+
+    btnProxFase.addEventListener('click', function(){
+           document.querySelector('#wrapper').style.display = 'none';
+
+           document.querySelector('.proxima-fase').style.display = 'none'; 
+           document.querySelector('#c').style.display = 'block';
+           reset();
+           iniciaJogo(); 
+        });
+    
+    limpaTela();
 
 }
 
@@ -121,9 +181,11 @@ function atualizaTimer() {
         clearInterval(attTimer);
         clearInterval(escreveNum);
         clearInterval(attNum);
+        fimDeFase();
         return false;
     }
     timer--;
+    // console.log(timer);
     
 }
 function escreveTimer() {
@@ -151,8 +213,15 @@ function escreveLimiteScore() {
     context.fillText(limiteScore, 35, 95); 
 }
 
-// function ganhou() {
-//     if (limiteScore == gn) {
-        
-//     }
-// }
+
+function reset() {
+ barraW = 75;
+ barraH = 25;
+ score = 0;
+ numeros = [];
+ timer = 30;
+ barraX, barraY;
+ mouseX = 0, mouseY = 0;
+ velocidade = 5;
+ limiteScore = 0;
+}
