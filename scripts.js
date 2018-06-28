@@ -21,10 +21,6 @@ window.onload = function () {
     btnFase.addEventListener("click", function(){
         document.querySelector('#wrapper').style.display = 'none';
         document.querySelector('#c').style.display = 'block';
-        document.querySelector('.explica-simples').style.display = 'none';
-        document.querySelector('.tela-inicial').style.display = 'none';
-        document.querySelector('.tela-final').style.display = 'none';
-        document.querySelector('.creditos').style.display = 'none';
 
         carregaJogo();
     });
