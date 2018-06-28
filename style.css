@@ -13,12 +13,12 @@
             height: 600px;
             position: absolute;
         }
-        .tela-inicial, .tela-final{
+        .tela-inicial, .tela-final, .proxima-fase{
             width: 800px;
             height: 600px;
             position: absolute;
         }
-        .tela-final, .explica-simples, #c, .creditos{
+        .tela-final, .explica-simples,.proxima-fase{
             display: none;
         }
         #c{
@@ -33,7 +33,7 @@
             color:#674172;
             font-size: 50px
         }
-        .tela-inicial button{
+        .tela-inicial button, .proxima-fase button{
             display: block;
             margin: 50px auto;
                          

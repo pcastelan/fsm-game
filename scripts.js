@@ -9,7 +9,13 @@ var barraX, barraY;
 var mouseX = 0, mouseY = 0;
 var velocidade = 5;
 var attTimer, escreveNum, attNum;
+var limiteScore = 0;
 var somPonto, somExplicacao, somJogo, somTelaInicial, somGanhou, somPerdeu, somVolume = .5;
+
+var proxFase = document.querySelector('.proxima-fase');
+var btnProxFase = document.querySelector('#btn-prox-fase');
+
+
 
 window.onload = function () {
 
@@ -42,12 +48,16 @@ window.onload = function () {
         somJogo.play();
         carregaJogo();
     });
+
+
+
 }
 
 function carregaJogo () {
     //contexto
     canvas = document.getElementById('c');
     context = canvas.getContext('2d');
+
 
     iniciaJogo();
     
@@ -69,6 +79,15 @@ function iniciaJogo() {
 
     //atualiza o relogio
     attTimer = setInterval(atualizaTimer, 1000);
+
+    // }
+    limiteScore = geraNumero()[0];
+
+    proxFase.style.width = canvas.width / 2;
+    proxFase.style.height= canvas.height / 2;
+    proxFase.style.marginLeft = 'auto';
+    proxFase.style.marginRight = 'auto';
+
 }
 function moveBarra(e) {
     barraX = e.clientX;
@@ -95,7 +114,33 @@ function montaFase() {
 }
 
 function fimDeFase() {
+    
+     document.querySelector('#wrapper').style.display = 'block';
+
+    if (limiteScore == score) {
+       document.querySelector('#title-prox-fase').innerHTML = 'Parabéns!';
+        btnProxFase.innerHTML = 'Clique aqui para ir para próxima fase.'; 
+    }else {
+        document.querySelector('#c').style.display = 'none';
+        document.querySelector('.proxima-fase').style.display = 'block';
+        document.querySelector('#title-prox-fase').innerHTML = ':(';
+        btnProxFase.innerHTML = 'Clique aqui para tentar novamente!';
+
+        
+
+    }
+
+    btnProxFase.addEventListener('click', function(){
+           document.querySelector('#wrapper').style.display = 'none';
+
+           document.querySelector('.proxima-fase').style.display = 'none'; 
+           document.querySelector('#c').style.display = 'block';
+           reset();
+           iniciaJogo(); 
+        });
+    
     limpaTela();
+
 }
 
 //gera um numero randomico inteiro dentre um intervalo
@@ -114,6 +159,7 @@ function geraNumero() {
 function escreveNumeros() {
     montaFase();
     atualizaScore(score);
+    escreveLimiteScore();
     escreveTimer();
     context.font = "25px Segoe UI";
     context.fillStyle = "#446CB3";
@@ -165,4 +211,25 @@ function atualizaScore(s) {
     context.fillText("Score:", 35, 35);
     context.font = "20px Segoe UI";
     context.fillText(s, 35, 55);
+}
+
+function escreveLimiteScore() {
+    context.font = "15px Segoe UI";
+    context.fillStyle = "#333";
+    context.fillText("Limite:", 35, 75);
+    context.font = "20px Segoe UI";
+    context.fillText(limiteScore, 35, 95); 
+}
+
+
+function reset() {
+ barraW = 75;
+ barraH = 25;
+ score = 0;
+ numeros = [];
+ timer = 30;
+ barraX, barraY;
+ mouseX = 0, mouseY = 0;
+ velocidade = 5;
+ limiteScore = 0;
 }
