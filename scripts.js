@@ -7,41 +7,51 @@ var numeros = [];
 var timer = 30;
 var barraX, barraY;
 var mouseX = 0, mouseY = 0;
-var velocidade = 10;
+var velocidade = 5;
 var attTimer, escreveNum, attNum;
 
 window.onload = function () {
+    var btnInicio = document.querySelector('#iniciaJogo');
+    btnInicio.addEventListener("click", function () {
+        document.querySelector('.tela-inicial').style.display = 'none';
+        document.querySelector('.explica-simples').style.display = 'block';
+    });
+
+    var btnFase = document.querySelector('#carregaJogo');
+    btnFase.addEventListener("click", function(){
+
+    });
+}
+
+function carregaJogo () {
     //contexto
     canvas = document.getElementById('c');
     context = canvas.getContext('2d');
 
+    iniciaJogo();
+    
+
+}
+function iniciaJogo() {
     barraX = (canvas.width / 2) - (barraW / 2);
     barraY = canvas.height - barraH;
     montaFase();
 
-    
-    
     //define o relogio
 
     timer = 30;
-    
+
     //escreve numeros na tela            
     escreveNum = setInterval(escreveNumeros, 1000 / 30);
 
     //adiciona novos numeros a matriz de numeros
-    attNum = setInterval(atualizaNumeros, 1000 / 1);
+    attNum = setInterval(atualizaNumeros, 1000 / 5);
 
     //atualiza o relogio
-
-    // if (timer > 0) {
     attTimer = setInterval(atualizaTimer, 1000);
-    // }
-
 }
 function moveBarra(e) {
     barraX = e.clientX;
-    // barraX += e.clientX-mouseX;
-    // mouseX = e.clientX;
     if((barraX+barraW)>canvas.width){
         barraX=barraX-barraW;
     }
@@ -60,13 +70,13 @@ function limpaTela() {
 function montaFase() {
     limpaTela();
 
-
     //barrinha 
-
     context.fillStyle = '#674172';
     context.fillRect(barraX, barraY, barraW, barraH);
+}
 
-
+function fimDeFase() {
+    limpaTela();
 }
 
 //gera um numero randomico inteiro dentre um intervalo
@@ -117,6 +127,7 @@ function atualizaTimer() {
         clearInterval(attTimer);
         clearInterval(escreveNum);
         clearInterval(attNum);
+        fimDeFase();
         return false;
     }
     timer--;
