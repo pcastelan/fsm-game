@@ -18,7 +18,7 @@
             height: 600px;
             position: absolute;
         }
-        .tela-final, .explica-simples,.proxima-fase{
+        .tela-final, .explica-simples,.proxima-fase, #c, .creditos{
             display: none;
         }
         #c{
@@ -33,6 +33,9 @@
             color:#674172;
             font-size: 50px
         }
+        .explica-simples h2  {
+            margin-bottom: 0px;
+        }
         .tela-inicial button, .proxima-fase button{
             display: block;
             margin: 50px auto;
@@ -41,7 +44,7 @@
         .explica-simples button{
             display:block;
             float: right;
-            margin: 10px 20px;
+            margin: 10px 10px;
         }
         .creditos{
             padding: 20px;

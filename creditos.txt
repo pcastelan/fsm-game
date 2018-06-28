@@ -1,8 +1,0 @@
-explicacao = http://bomalunoonline.blogspot.com/2010/05/matematica-resumos-explicacoes-e-dicas.html
-
-sons longos = https://incompetech.com/
-    + Kevin MacLeod = 
-        - Pookatori and Friends = telainicial.mp3
-        - Overworld = explicacao.mp3
-        - Mega Hyper Ultrastorm = jogando.mp3
-sons curtos = http://www.noiseforfun.com/

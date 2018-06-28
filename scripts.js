@@ -120,14 +120,14 @@ function fimDeFase() {
     if (limiteScore == score) {
        document.querySelector('#title-prox-fase').innerHTML = 'Parabéns!';
         btnProxFase.innerHTML = 'Clique aqui para ir para próxima fase.'; 
+        somGanhou.play();
     }else {
         document.querySelector('#c').style.display = 'none';
         document.querySelector('.proxima-fase').style.display = 'block';
+        document.querySelector('.explica-simples').style.display = 'none';
         document.querySelector('#title-prox-fase').innerHTML = ':(';
-        btnProxFase.innerHTML = 'Clique aqui para tentar novamente!';
-
-        
-
+        btnProxFase.innerHTML = 'Clique aqui para tentar novamente!';       
+        somPerdeu.play();
     }
 
     btnProxFase.addEventListener('click', function(){
