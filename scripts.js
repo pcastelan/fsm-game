@@ -19,7 +19,14 @@ window.onload = function () {
 
     var btnFase = document.querySelector('#carregaJogo');
     btnFase.addEventListener("click", function(){
+        document.querySelector('#wrapper').style.display = 'none';
+        document.querySelector('#c').style.display = 'block';
+        document.querySelector('.explica-simples').style.display = 'none';
+        document.querySelector('.tela-inicial').style.display = 'none';
+        document.querySelector('.tela-final').style.display = 'none';
+        document.querySelector('.creditos').style.display = 'none';
 
+        carregaJogo();
     });
 }
 
@@ -36,9 +43,9 @@ function iniciaJogo() {
     barraX = (canvas.width / 2) - (barraW / 2);
     barraY = canvas.height - barraH;
     montaFase();
+    console.log(timer);
 
     //define o relogio
-
     timer = 30;
 
     //escreve numeros na tela            
@@ -131,6 +138,7 @@ function atualizaTimer() {
         return false;
     }
     timer--;
+    console.log(timer);
     
 }
 function escreveTimer() {
